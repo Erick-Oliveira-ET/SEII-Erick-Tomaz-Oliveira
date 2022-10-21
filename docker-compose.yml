@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  web:
+    image: "python:latest"
+    # image: "ubuntu:latest"
+    command: tail -F anything
+    volumes:
+      - .:/code

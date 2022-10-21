@@ -1,0 +1,17 @@
+## a) Liste e descreva o que são as 4 etapas do processo de compilação.
+
+As etapas são préprocessamento, compilação, montagem e link.
+
+## b) O compilador gcc permite fornecer parâmetros extras, que modificam desde a emissão de erros até o binário final, o otimizando para determinados comportamentos. Explique a função dos seguintes parâmetros:
+
+i) -static: 
+
+ii) -g: Produz informações para debug
+
+iii) -pendantic:
+
+iv) -Wall: habilita avisos
+
+v) -Os: 
+
+vi) -O3: Realiza otimizções no código. É possível passar as flags o1 e o2 tmb mas todas tem a mesma função de otmização. A diferença entre elas é que o nível de otimização varia entre de menor para maior de acordo com a numeração da flag.
