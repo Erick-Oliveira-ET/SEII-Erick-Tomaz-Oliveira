@@ -125,8 +125,6 @@ void loop()
     sprintf(&arr[cnt * 2], "%02X", mfrc522.uid.uidByte[cnt]);
   }
 
-  Serial.println(arr);
-
   // instrui o PICC quando no estado ACTIVE a ir para um estado de "parada"
   mfrc522.PICC_HaltA();
   // "stop" a encriptação do PCD, deve ser chamado após a comunicação com autenticação, caso contrário novas comunicações não poderão ser iniciadas
@@ -134,18 +132,12 @@ void loop()
 
   char *get_user_by_passcode_url = (char *)malloc(strlen(serverGetUserByCode) + strlen(arr) + 1);
 
-  Serial.println(strlen(serverGetUserByCode));
-  Serial.println(strlen(arr));
-
   int tempLength = strlen(serverGetUserByCode) + strlen(arr);
-  Serial.println(tempLength);
 
   memcpy(get_user_by_passcode_url, serverGetUserByCode, strlen(serverGetUserByCode));
   memcpy(get_user_by_passcode_url + strlen(serverGetUserByCode), arr, strlen(arr) + 1);
 
   Serial.println(get_user_by_passcode_url);
-
-  Serial.println("");
 
   String payload = httpGETRequest(get_user_by_passcode_url);
 
