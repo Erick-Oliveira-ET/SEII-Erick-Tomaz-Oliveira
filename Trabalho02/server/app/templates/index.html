@@ -1,0 +1,97 @@
+{% extends 'base.html' %} {% block head %}
+<title>Sistema</title>
+{% endblock %} {% block body %}
+<div class="content">
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <span class="navbar-brand mb-0 h1">Sistema</span>
+      <button id="open" type="button" class="btn btn-outline-primary">
+        Abrir Catraca
+      </button>
+    </div>
+  </nav>
+
+  <h1 style="text-align: center">Usuários</h1>
+  {% if users|length < 1 %}
+  <h4 style="text-align: center">
+    Não existe nenhum usuário cadastrado. Cadastre o primeiro abaixo.
+  </h4>
+  {% else %}
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Usuário</th>
+        <th scope="col">Código</th>
+        <th scope="col">Dt de Criação</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    {% for user in users %}
+    <tr>
+      <th scope="row">{{ user.id }}</th>
+      <td>{{ user.name }}</td>
+      <td>{{ user.passCode }}</td>
+      <td>{{ user.date_created.date() }}</td>
+      <td class="action-column">
+        <a href="/user/{{user.id}}">Update</a>
+        <br />
+        <a href="/user/delete/{{user.id}}">Delete</a>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
+  <div class="form mt-5">
+    <h2>Cadastro de Usuário</h2>
+    <form action="/user" method="POST">
+      <div class="mb-3">
+        <label for="name" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="name" name="name" />
+      </div>
+      <div class="mb-3">
+        <label for="passCode" class="form-label">Código</label>
+        <div class="row">
+          <div class="col-auto">
+            <input class="form-control" name="passCode" id="passCode" />
+          </div>
+
+          <div class="col-auto">
+            <button id="getCode" class="btn btn-outline-primary mb-3">
+              Get Code
+            </button>
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" value="Adicionar" />
+    </form>
+  </div>
+</div>
+<script>
+  document
+    .getElementById("getCode")
+    .addEventListener("click", function (event) {
+      event.preventDefault();
+      fetch("{{HTTP_ESP_URL}}/code", {
+        headers: {
+          "Content-Type": "text/plain",
+        },
+      })
+        .then((res) => res.text())
+        .then((data) => {
+          console.log(data);
+          document.getElementById("passCode").value = data;
+        });
+    });
+
+  document.getElementById("open").addEventListener("click", function (event) {
+    event.preventDefault();
+    fetch("{{HTTP_ESP_URL}}/open", {
+      headers: {
+        "Content-Type": "text/plain",
+      },
+    });
+  });
+</script>
+{% endblock %}
