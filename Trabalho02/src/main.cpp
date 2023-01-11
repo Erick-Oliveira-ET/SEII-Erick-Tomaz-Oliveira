@@ -84,25 +84,6 @@ void setup()
 
 void loop()
 {
-  unsigned long currentMillis = millis();
-
-  if (currentMillis - previousMillis >= interval)
-  {
-    // Check WiFi connection status
-    if (WiFi.status() == WL_CONNECTED)
-    {
-      // serverResponse = httpGETRequest(serverHelloWorld);
-      // Serial.println("Server Message: " + serverResponse);
-
-      // save the last HTTP GET Request
-      previousMillis = currentMillis;
-    }
-    else
-    {
-      Serial.println("WiFi Disconnected");
-    }
-  }
-
   // Aguarda a aproximacao do cartao
   if (!mfrc522.PICC_IsNewCardPresent())
   {
@@ -138,6 +119,26 @@ void loop()
   memcpy(get_user_by_passcode_url + strlen(serverGetUserByCode), arr, strlen(arr) + 1);
 
   Serial.println(get_user_by_passcode_url);
+
+  if (!(WiFi.status() == WL_CONNECTED))
+  {
+    Serial.println("WiFi Disconnected");
+
+    while (WiFi.status() != WL_CONNECTED)
+    {
+      WiFi.begin(ssid, password);
+      Serial.println("\nConnecting");
+
+      Serial.print(".");
+      delay(100);
+    }
+
+    Serial.println("\nConnected to the WiFi network");
+    Serial.print("Local ESP32 IP: ");
+    Serial.println(WiFi.localIP());
+
+    return;
+  }
 
   String payload = httpGETRequest(get_user_by_passcode_url);
 
