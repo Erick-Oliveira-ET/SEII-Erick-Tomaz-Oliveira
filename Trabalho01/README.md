@@ -12,6 +12,10 @@ Trabalho Final 1 da Disciplina de Sistemas Embarcados II
 
 > python3 airpendulum.py
 
+## [Link Do Vídeo](https://youtu.be/wlXDhRM0lxc)
+
+[https://youtu.be/wlXDhRM0lxc](https://youtu.be/wlXDhRM0lxc)
+
 ## Integrantes do Grupo
 
 - Erick Tomaz Oliveira - 11911EMT020
